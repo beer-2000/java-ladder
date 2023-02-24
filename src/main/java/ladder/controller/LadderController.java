@@ -1,5 +1,6 @@
 package ladder.controller;
 
+import java.util.List;
 import ladder.domain.Ladder;
 import ladder.domain.Players;
 import ladder.domain.Result;
@@ -25,16 +26,37 @@ public class LadderController {
     }
 
     public void play() {
-        OutputView.announceExecution();
+        OutputView.announceCreateLadder();
         OutputView.printPlayers(players.getNameValues());
         OutputView.printLadder(ladder.getLines());
         OutputView.printResults(results.getResultValues());
-        printResult();
+        String nameValue;
+        do {
+            nameValue = InputView.readNameForResult();
+            printResult(nameValue);
+        } while (!nameValue.equals("all"));
     }
 
-    private void printResult() {
-        String nameRaw = InputView.readNameForResult();
-        int playerIndex = players.getIndexOf(nameRaw);
+    private void printResult(String nameValue) {
+        if (nameValue.equals("all")) {
+            printAllResults();
+            return;
+        }
+        OutputView.announceExecution();
+        printResultByNameValue(nameValue);
+    }
+
+    private void printAllResults() {
+        OutputView.announceExecution();
+        List<String> nameValues = players.getNameValues();
+        for (String nameValue : nameValues) {
+            OutputView.printNameWithColon(nameValue);
+            printResultByNameValue(nameValue);
+        }
+    }
+
+    private void printResultByNameValue(String nameValue) {
+        int playerIndex = players.getIndexOf(nameValue);
         int resultIndex = ladder.getResultStartAt(playerIndex);
         Result result = results.getResultByIndex(resultIndex);
         OutputView.printResultAfterPlay(result);

@@ -62,7 +62,7 @@ public class OutputView {
         System.out.print(IMMOVABLE_BAR);
     }
 
-    public static void announceExecution() {
+    public static void announceCreateLadder() {
         System.out.println();
         System.out.println("사다리 결과");
     }
@@ -76,7 +76,15 @@ public class OutputView {
     }
 
     public static void printResultAfterPlay(Result result) {
-        System.out.println();
         System.out.println(result.getValue());
+    }
+
+    public static void printNameWithColon(String nameValue) {
+        System.out.print(nameValue + " : ");
+    }
+
+    public static void announceExecution() {
+        System.out.println();
+        System.out.println("실행 결과");
     }
 }
