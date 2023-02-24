@@ -2,6 +2,7 @@ package ladder.controller;
 
 import ladder.domain.Ladder;
 import ladder.domain.Players;
+import ladder.domain.Result;
 import ladder.domain.Results;
 import ladder.view.InputView;
 import ladder.view.OutputView;
@@ -28,5 +29,13 @@ public class LadderController {
         OutputView.printPlayers(players.getNameValues());
         OutputView.printLadder(ladder.getLines());
         OutputView.printResults(results.getResultValues());
+        printResult();
+    }
+
+    private void printResult() {
+        String nameRaw = InputView.readNameForResult();
+        int playerIndex = players.getIndexOf(nameRaw);
+        Result result = ladder.getResultStartAt(playerIndex);
+        OutputView.printResultAfterPlay(result);
     }
 }
