@@ -17,6 +17,7 @@ public class InputView {
     }
 
     public static String readResults() {
+        System.out.println();
         System.out.println("실행 결과를 입력하세요. (결과는 쉼표(,)로 구분하세요)");
         return SCANNER.nextLine();
     }

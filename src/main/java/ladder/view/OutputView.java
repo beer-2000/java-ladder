@@ -63,6 +63,14 @@ public class OutputView {
 
     public static void announceExecution() {
         System.out.println();
-        System.out.println("실행결과");
+        System.out.println("사다리 결과");
+    }
+
+    public static void printResults(List<String> resultValues) {
+        System.out.print(resultValues.get(0));
+        for (int i = 1; i < resultValues.size(); i++) {
+            printNameOnSquares(resultValues.get(i));
+        }
+        System.out.println();
     }
 }

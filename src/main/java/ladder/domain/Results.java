@@ -22,4 +22,9 @@ public class Results {
         return Arrays.stream(resultsInput.split(",")).collect(Collectors.toList());
     }
 
+    public List<String> getResultValues() {
+        return results.stream()
+                .map(Result::getValue)
+                .collect(Collectors.toList());
+    }
 }

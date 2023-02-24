@@ -15,8 +15,8 @@ public class LadderController {
 
     public LadderController() {
         this.players = new Players(InputView.readNames());
-        this.ladder = new Ladder(InputView.readCountOfLines(), getCountOfBars());
         this.results = new Results(InputView.readResults());
+        this.ladder = new Ladder(InputView.readCountOfLines(), getCountOfBars());
     }
 
     private int getCountOfBars() {
@@ -27,5 +27,6 @@ public class LadderController {
         OutputView.announceExecution();
         OutputView.printPlayers(players.getNameValues());
         OutputView.printLadder(ladder.getLines());
+        OutputView.printResults(results.getResultValues());
     }
 }
