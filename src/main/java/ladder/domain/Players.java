@@ -42,4 +42,15 @@ public class Players {
                 .map(Name::getValue)
                 .collect(Collectors.toList());
     }
+
+    public int getIndexOf(String nameRaw) {
+        int index = 0;
+        for (Player player : players) {
+            if (player.getName().getValue().equals(nameRaw)) {
+                return index;
+            }
+            index += 1;
+        }
+        throw new IllegalArgumentException("존재하지 않는 이름입니다.");
+    }
 }

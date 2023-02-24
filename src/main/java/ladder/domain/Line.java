@@ -1,5 +1,10 @@
 package ladder.domain;
 
+import static ladder.domain.Bar.MOVABLE;
+import static ladder.domain.Direction.CENTER;
+import static ladder.domain.Direction.LEFT;
+import static ladder.domain.Direction.RIGHT;
+
 import java.util.ArrayList;
 import java.util.List;
 import ladder.utils.BarGenerator;
@@ -46,5 +51,20 @@ public class Line {
 
     public List<Bar> getBars() {
         return bars;
+    }
+
+    public void move(Location location) {
+        int barIndex = location.getBarIndex();
+        location.moveTo(calculateDirectionAt(barIndex));
+    }
+
+    private Direction calculateDirectionAt(int barIndex) {
+        if (barIndex > 0 && this.bars.get(barIndex - 1) == MOVABLE) {
+            return LEFT;
+        }
+        if (barIndex < this.bars.size() && this.bars.get(barIndex) == MOVABLE) {
+            return RIGHT;
+        }
+        return CENTER;
     }
 }

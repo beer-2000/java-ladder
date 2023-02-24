@@ -22,5 +22,9 @@ public class Ladder {
         return Collections.unmodifiableList(lines);
     }
 
-    public
+    public int getResultStartAt(int playerIndex) {
+        Location location = new Location(playerIndex);
+        lines.forEach(line -> line.move(location));
+        return location.getBarIndex();
+    }
 }

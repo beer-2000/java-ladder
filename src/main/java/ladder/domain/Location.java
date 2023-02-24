@@ -8,4 +8,13 @@ public class Location {
         this.lineIndex = 0;
         this.barIndex = barIndex;
     }
+
+    public int getBarIndex() {
+        return this.barIndex;
+    }
+
+    public void moveTo(Direction direction) {
+        this.barIndex += direction.getIndexDifference();
+        this.lineIndex += 1;
+    }
 }

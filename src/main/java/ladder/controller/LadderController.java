@@ -35,7 +35,8 @@ public class LadderController {
     private void printResult() {
         String nameRaw = InputView.readNameForResult();
         int playerIndex = players.getIndexOf(nameRaw);
-        Result result = ladder.getResultStartAt(playerIndex);
+        int resultIndex = ladder.getResultStartAt(playerIndex);
+        Result result = results.getResultByIndex(resultIndex);
         OutputView.printResultAfterPlay(result);
     }
 }

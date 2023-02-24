@@ -27,4 +27,8 @@ public class Results {
                 .map(Result::getValue)
                 .collect(Collectors.toList());
     }
+
+    public Result getResultByIndex(int resultIndex) {
+        return this.results.get(resultIndex);
+    }
 }
