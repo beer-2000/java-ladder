@@ -3,6 +3,7 @@ package ladder.view;
 import java.util.List;
 import ladder.domain.Bar;
 import ladder.domain.Line;
+import ladder.domain.Result;
 
 public class OutputView {
     private static String startSpaces;
@@ -72,5 +73,10 @@ public class OutputView {
             printNameOnSquares(resultValues.get(i));
         }
         System.out.println();
+    }
+
+    public static void printResultAfterPlay(Result result) {
+        System.out.println();
+        System.out.println(result.getValue());
     }
 }
