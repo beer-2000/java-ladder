@@ -16,14 +16,31 @@ import ladder.view.OutputView;
 public class LadderController {
     private static final int DIFFERENCE_PLAYERS_AND_BARS = 1;
 
-    private final Players players;
+    private Players players;
     private final Ladder ladder;
     private final Results results;
 
     public LadderController() {
-        this.players = new Players(InputView.readNames());
+        initPlayers();
         this.results = new Results(InputView.readResults(), this.players.getSize());
         this.ladder = new Ladder(InputView.readCountOfLines(), getCountOfBars());
+    }
+
+    private void initPlayers() {
+        boolean isGenerated;
+        do {
+            isGenerated = generatePlayers();
+        } while (!isGenerated);
+    }
+
+    private boolean generatePlayers() {
+        try {
+            this.players = new Players(InputView.readNames());;
+            return true;
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            return false;
+        }
     }
 
     private int getCountOfBars() {
