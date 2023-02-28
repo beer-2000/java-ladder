@@ -3,7 +3,6 @@ package ladder.view;
 import java.util.List;
 import ladder.domain.Bar;
 import ladder.domain.Line;
-import ladder.domain.Player;
 
 public class OutputView {
     public static final String DELIMITER_PREFIX = " : ";
@@ -77,22 +76,17 @@ public class OutputView {
         System.out.println();
     }
 
-    private static void announceExecution() {
+    public static void announceExecution() {
         System.out.println();
         System.out.println("실행 결과");
     }
 
-    public static void printMatchCandidateOfPlayer(String content) {
+    public static void printMatchCandidateOfPlayer(String matchCandidateValue) {
         announceExecution();
-        System.out.println(content);
+        System.out.println(matchCandidateValue);
     }
 
-    public static void printMatchCandidatesOfAllPlayers(List<Player> players) {
-        announceExecution();
-        players.forEach(OutputView::printPlayerAndMatchCandidate);
-    }
-
-    private static void printPlayerAndMatchCandidate(Player player) {
-        System.out.println(player.getNameValue() + DELIMITER_PREFIX + player.getContentOfMatchCandidate());
+    public static void printMatchCandidateOfPlayerWithName(String nameValue, String matchCandidateValue) {
+        System.out.println(nameValue + DELIMITER_PREFIX + nameValue);
     }
 }

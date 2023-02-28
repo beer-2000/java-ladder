@@ -6,6 +6,8 @@ import static ladder.domain.GameCommand.END;
 import ladder.domain.GameCommand;
 import ladder.domain.Ladder;
 import ladder.domain.Location;
+import ladder.domain.MatchResult;
+import ladder.domain.MatchResults;
 import ladder.domain.Player;
 import ladder.domain.Players;
 import ladder.domain.MatchCandidate;
@@ -52,10 +54,11 @@ public class LadderController {
         OutputView.printPlayers(this.players.getNameValues());
         OutputView.printLadder(this.ladder.getLines());
         OutputView.printMatchCandidates(this.matchCandidates.getContents());
-        printMatchCandidateAfterPlay();
+        calculateMatchCandidateOfAllPlayer();
+        printMatchCandidate();
     }
 
-    private void printMatchCandidateAfterPlay() {
+    private void printMatchCandidate() {
         GameCommand gameCommand;
         do {
             gameCommand = printMatchCandidateByInput(InputView.readPlayerName());
@@ -64,11 +67,10 @@ public class LadderController {
 
     private GameCommand printMatchCandidateByInput(String playerNameInput) {
         if (playerNameInput.equals("all")) {
-            calculateMatchCandidateOfAllPlayer();
             printMatchCandidatesOfAllPlayers();
             return END;
         }
-        printMatchCandidateOnePlayer(playerNameInput);
+        printMatchCandidateOfOnePlayer(playerNameInput);
         return CONTINUE;
     }
 
@@ -76,22 +78,26 @@ public class LadderController {
         this.players.getPlayers().forEach(this::calculateMatchCandidateOfPlayer);
     }
 
-    private void printMatchCandidatesOfAllPlayers() {
-        OutputView.printMatchCandidatesOfAllPlayers(this.players.getPlayers());
-    }
-
-    private void printMatchCandidateOnePlayer(String playerNameInput) {
-        Player player = this.players.getPlayerByName(playerNameInput);
-        if (!player.haveMatchCandidate()) {
-            calculateMatchCandidateOfPlayer(player);
-        }
-        OutputView.printMatchCandidateOfPlayer(player.getContentOfMatchCandidate());
-    }
-
     private void calculateMatchCandidateOfPlayer(Player player) {
         Location location = new Location(player.getIndex());
         this.ladder.move(location);
         MatchCandidate matchCandidateOfPlayer = this.matchCandidates.getMatchCandidateByIndex(location.getColumnIndex());
-        player.saveMatchCandidate(matchCandidateOfPlayer);
+        MatchResults.add(new MatchResult(player, matchCandidateOfPlayer));
+    }
+
+    private void printMatchCandidatesOfAllPlayers() {
+        OutputView.announceExecution();
+        this.players.getPlayers().forEach(this::printMatchCandidateOfOnePlayerWithName);
+    }
+
+    private void printMatchCandidateOfOnePlayerWithName(Player player) {
+        MatchResult matchResult = MatchResults.getMatchResultOf(player);
+        OutputView.printMatchCandidateOfPlayerWithName(player.getNameValue(), matchResult.getMatchCandidateValue());
+    }
+
+    private void printMatchCandidateOfOnePlayer(String playerNameInput) {
+        Player player = this.players.getPlayerByName(playerNameInput);
+        MatchResult matchResult = MatchResults.getMatchResultOf(player);
+        OutputView.printMatchCandidateOfPlayer(matchResult.getMatchCandidateValue());
     }
 }
