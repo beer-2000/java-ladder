@@ -1,9 +1,9 @@
 package ladder.domain;
 
-public class Result {
+public class MatchCandidate {
     private final String content;
 
-    public Result(String content) {
+    public MatchCandidate(String content) {
         this.content = content;
     }
 

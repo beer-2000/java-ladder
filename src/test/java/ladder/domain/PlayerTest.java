@@ -20,24 +20,24 @@ class PlayerTest {
 
     @Test
     @DisplayName("결과를 입력받아 Player의 결과로 저장한다.")
-    void shouldSaveResultWhenRequest() {
+    void shouldSaveMatchCandidateWhenRequest() {
         Player player = new Player("name", 0);
-        assertDoesNotThrow(() -> player.saveResult(new Result("content")));
+        assertDoesNotThrow(() -> player.saveMatchCandidate(new MatchCandidate("content")));
     }
 
     @Test
     @DisplayName("결과가 저장된 Player임을 확인한다.")
-    void shouldBeTrueWhenSavedResult() {
+    void shouldBeTrueWhenSavedMatchCandidate() {
         Player player = new Player("name", 0);
-        player.saveResult(new Result("content"));
-        assertThat(player.haveResult()).isTrue();
+        player.saveMatchCandidate(new MatchCandidate("content"));
+        assertThat(player.haveMatchCandidate()).isTrue();
     }
 
     @Test
     @DisplayName("결과가 저장되지 않은 Player임을 확인한다.")
-    void shouldBeFalseWhenNotSavedResult() {
+    void shouldBeFalseWhenNotSavedMatchCandidate() {
         Player player = new Player("name", 0);
-        assertThat(player.haveResult()).isFalse();
+        assertThat(player.haveMatchCandidate()).isFalse();
     }
 
     @Test
@@ -50,18 +50,18 @@ class PlayerTest {
 
     @Test
     @DisplayName("Player에 저장된 결과를 반환한다.")
-    void shouldReturnValueOfResultWhenRequest() {
+    void shouldReturnValueOfMatchCandidateWhenRequest() {
         Player player = new Player("name", 0);
-        Result result = new Result("content");
-        player.saveResult(result);
-        assertThat(player.getResult()).isEqualTo(result);
+        MatchCandidate matchCandidate = new MatchCandidate("content");
+        player.saveMatchCandidate(matchCandidate);
+        assertThat(player.getMatchCandidate()).isEqualTo(matchCandidate);
     }
 
     @Test
     @DisplayName("Player에 결과가 저장되지 않은 채로 결과를 조회하면 예외가 발생한다.")
-    void shouldThrowExceptionWhenGetResultNotSaved() {
+    void shouldThrowExceptionWhenGetMatchCandidateNotSaved() {
         Player player = new Player("name", 0);
-        assertThatThrownBy(() -> player.getResult())
+        assertThatThrownBy(() -> player.getMatchCandidate())
                 .isInstanceOf(NoSuchElementException.class)
                 .hasMessage("플레이어의 결과가 존재하지 않습니다.");
     }
@@ -91,17 +91,17 @@ class PlayerTest {
 
     @Test
     @DisplayName("Player가 가지고 있는 결과의 내용을 반환한다.")
-    void shouldReturnContentOfResultWhenRequest() {
+    void shouldReturnContentOfMatchCandidateWhenRequest() {
         Player player = new Player("name", 3);
-        player.saveResult(new Result("content"));
-        assertThat(player.getContentOfResult()).isEqualTo("content");
+        player.saveMatchCandidate(new MatchCandidate("content"));
+        assertThat(player.getContentOfMatchCandidate()).isEqualTo("content");
     }
 
     @Test
     @DisplayName("결과가 저장되지 않은 Player의 결과 내용을 요청하면 예외가 발생한다.")
     void shou() {
         Player player = new Player("name", 3);
-        assertThatThrownBy(player::getContentOfResult)
+        assertThatThrownBy(player::getContentOfMatchCandidate)
                 .isInstanceOf(NoSuchElementException.class)
                 .hasMessage("플레이어의 결과가 존재하지 않습니다.");
     }

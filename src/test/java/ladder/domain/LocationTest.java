@@ -37,9 +37,9 @@ class LocationTest {
     @ParameterizedTest
     @CsvSource(value = {"LEFT:1", "RIGHT:3", "CENTER:2"}, delimiter = ':')
     @DisplayName("방향을 입력 받아 열을 움직인다.")
-    void shouldMoveColumnWhenInputDirection(Direction direction, int columnResultAfterMove) {
+    void shouldMoveColumnWhenInputDirection(Direction direction, int columnMatchCandidateAfterMove) {
         Location location = new Location(2);
         location.moveColumnTo(direction);
-        assertThat(location.getColumnIndex()).isEqualTo(columnResultAfterMove);
+        assertThat(location.getColumnIndex()).isEqualTo(columnMatchCandidateAfterMove);
     }
 }

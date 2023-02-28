@@ -1,16 +1,12 @@
 package ladder.domain;
 
-import java.util.NoSuchElementException;
-import java.util.Optional;
-
 public class Player {
     private final Name name;
-    private int index;
-    private Optional<Result> result;
+    private final int index;
+    private MatchCandidate matchCandidate;
 
     public Player(String nameValue, int index) {
         this.name = new Name(nameValue);
-        this.result = Optional.empty();
         this.index = index;
     }
 
@@ -18,21 +14,21 @@ public class Player {
         return name;
     }
 
-    public void saveResult(Result result) {
-        this.result = Optional.ofNullable(result);
+    public void saveMatchCandidate(MatchCandidate matchCandidate) {
+        this.matchCandidate = matchCandidate;
     }
 
 
-    public boolean haveResult() {
-        return this.result.isPresent();
+    public boolean haveMatchCandidate() {
+        return this.matchCandidate != null;
     }
 
     public String getNameValue() {
         return this.name.value();
     }
 
-    public Result getResult() {
-        return this.result.orElseThrow(() -> new NoSuchElementException("플레이어의 결과가 존재하지 않습니다."));
+    public MatchCandidate getMatchCandidate() {
+        return this.matchCandidate;
     }
 
     public int getIndex() {
@@ -43,7 +39,7 @@ public class Player {
         return this.name.haveSameValueWith(nameValue);
     }
 
-    public String getContentOfResult() {
-        return getResult().content();
+    public String getContentOfMatchCandidate() {
+        return getMatchCandidate().content();
     }
 }

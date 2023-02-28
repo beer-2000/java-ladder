@@ -69,7 +69,7 @@ public class OutputView {
         System.out.print(IMMOVABLE_BAR);
     }
 
-    public static void printResults(List<String> contents) {
+    public static void printMatchCandidates(List<String> contents) {
         System.out.print(contents.get(0));
         for (int i = 1; i < contents.size(); i++) {
             printNameOnSquares(contents.get(i));
@@ -82,17 +82,17 @@ public class OutputView {
         System.out.println("실행 결과");
     }
 
-    public static void printResultOfPlayer(String content) {
+    public static void printMatchCandidateOfPlayer(String content) {
         announceExecution();
         System.out.println(content);
     }
 
-    public static void printResultsOfAllPlayers(List<Player> players) {
+    public static void printMatchCandidatesOfAllPlayers(List<Player> players) {
         announceExecution();
-        players.forEach(OutputView::printPlayerAndResult);
+        players.forEach(OutputView::printPlayerAndMatchCandidate);
     }
 
-    private static void printPlayerAndResult(Player player) {
-        System.out.println(player.getNameValue() + DELIMITER_PREFIX + player.getContentOfResult());
+    private static void printPlayerAndMatchCandidate(Player player) {
+        System.out.println(player.getNameValue() + DELIMITER_PREFIX + player.getContentOfMatchCandidate());
     }
 }

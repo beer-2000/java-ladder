@@ -8,8 +8,8 @@ import ladder.domain.Ladder;
 import ladder.domain.Location;
 import ladder.domain.Player;
 import ladder.domain.Players;
-import ladder.domain.Result;
-import ladder.domain.Results;
+import ladder.domain.MatchCandidate;
+import ladder.domain.MatchCandidates;
 import ladder.view.InputView;
 import ladder.view.OutputView;
 
@@ -18,11 +18,11 @@ public class LadderController {
 
     private Players players;
     private final Ladder ladder;
-    private final Results results;
+    private final MatchCandidates matchCandidates;
 
     public LadderController() {
         initPlayers();
-        this.results = new Results(InputView.readResults(), this.players.getSize());
+        this.matchCandidates = new MatchCandidates(InputView.readMatchCandidates(), this.players.getSize());
         this.ladder = new Ladder(InputView.readCountOfLines(), getCountOfBars());
     }
 
@@ -51,47 +51,47 @@ public class LadderController {
         OutputView.announceCreateLadder();
         OutputView.printPlayers(this.players.getNameValues());
         OutputView.printLadder(this.ladder.getLines());
-        OutputView.printResults(this.results.getContents());
-        printResultAfterPlay();
+        OutputView.printMatchCandidates(this.matchCandidates.getContents());
+        printMatchCandidateAfterPlay();
     }
 
-    private void printResultAfterPlay() {
+    private void printMatchCandidateAfterPlay() {
         GameCommand gameCommand;
         do {
-            gameCommand = printResultByInput(InputView.readPlayerName());
+            gameCommand = printMatchCandidateByInput(InputView.readPlayerName());
         } while (gameCommand == CONTINUE);
     }
 
-    private GameCommand printResultByInput(String playerNameInput) {
+    private GameCommand printMatchCandidateByInput(String playerNameInput) {
         if (playerNameInput.equals("all")) {
-            calculateResultOfAllPlayer();
-            printResultsOfAllPlayers();
+            calculateMatchCandidateOfAllPlayer();
+            printMatchCandidatesOfAllPlayers();
             return END;
         }
-        printResultOnePlayer(playerNameInput);
+        printMatchCandidateOnePlayer(playerNameInput);
         return CONTINUE;
     }
 
-    private void calculateResultOfAllPlayer() {
-        this.players.getPlayers().forEach(this::calculateResultOfPlayer);
+    private void calculateMatchCandidateOfAllPlayer() {
+        this.players.getPlayers().forEach(this::calculateMatchCandidateOfPlayer);
     }
 
-    private void printResultsOfAllPlayers() {
-        OutputView.printResultsOfAllPlayers(this.players.getPlayers());
+    private void printMatchCandidatesOfAllPlayers() {
+        OutputView.printMatchCandidatesOfAllPlayers(this.players.getPlayers());
     }
 
-    private void printResultOnePlayer(String playerNameInput) {
+    private void printMatchCandidateOnePlayer(String playerNameInput) {
         Player player = this.players.getPlayerByName(playerNameInput);
-        if (!player.haveResult()) {
-            calculateResultOfPlayer(player);
+        if (!player.haveMatchCandidate()) {
+            calculateMatchCandidateOfPlayer(player);
         }
-        OutputView.printResultOfPlayer(player.getContentOfResult());
+        OutputView.printMatchCandidateOfPlayer(player.getContentOfMatchCandidate());
     }
 
-    private void calculateResultOfPlayer(Player player) {
+    private void calculateMatchCandidateOfPlayer(Player player) {
         Location location = new Location(player.getIndex());
         this.ladder.move(location);
-        Result resultOfPlayer = this.results.getResultByIndex(location.getColumnIndex());
-        player.saveResult(resultOfPlayer);
+        MatchCandidate matchCandidateOfPlayer = this.matchCandidates.getMatchCandidateByIndex(location.getColumnIndex());
+        player.saveMatchCandidate(matchCandidateOfPlayer);
     }
 }
