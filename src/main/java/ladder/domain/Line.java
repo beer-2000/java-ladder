@@ -57,39 +57,16 @@ public class Line {
     }
 
     public void move(Location location) {
-        if (moveLeftIfPossible(location)) {
-            return;
-        }
-
-        if (moveRightIfPossible(location)) {
-            return;
-        }
-        moveCenterIfPossible(location);
-    }
-
-    private boolean moveLeftIfPossible(Location location) {
         int startColumnIndex = location.getColumnIndex();
         if (isMovableToLeft(startColumnIndex)) {
             location.moveColumnTo(LEFT);
-            return true;
+            return;
         }
-        return false;
-    }
-
-    private boolean moveRightIfPossible(Location location) {
-        int startColumnIndex = location.getColumnIndex();
         if (isMovableToRight(startColumnIndex)) {
             location.moveColumnTo(RIGHT);
-            return true;
+            return;
         }
-        return false;
-    }
-
-    private void moveCenterIfPossible(Location location) {
-        int startColumnIndex = location.getColumnIndex();
-        if (isMovableToCenter(startColumnIndex)) {
-            location.moveColumnTo(CENTER);
-        }
+        location.moveColumnTo(CENTER);
     }
 
     private boolean isMovableToLeft(int startColumnIndex) {
@@ -98,9 +75,5 @@ public class Line {
 
     private boolean isMovableToRight(int startColumnIndex) {
         return this.bars.get(startColumnIndex + RIGHT_BIAS) == MOVABLE;
-    }
-
-    private boolean isMovableToCenter(int startColumnIndex) {
-        return !(isMovableToLeft(startColumnIndex) || isMovableToRight(startColumnIndex));
     }
 }
