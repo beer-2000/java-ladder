@@ -1,6 +1,5 @@
 package ladder.domain;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.assertj.core.api.Assertions.*;
 
 import org.junit.jupiter.api.DisplayName;
@@ -15,7 +14,8 @@ class LocationTest {
     @ValueSource(ints = {0, 5})
     @DisplayName("초기 위치를 입력 받아 Location을 생성한다")
     void shouldDoesNotThrowExceptionWhenCreate(int input) {
-        assertDoesNotThrow(() -> new Location(input));
+        Location location = new Location(input);
+        assertThat(location.getColumnIndex()).isEqualTo(input);
     }
 
     @Test
